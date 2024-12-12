@@ -13,16 +13,16 @@ class PreferencesRepository  @Inject constructor(
     @ApplicationContext private val context: Context
 ) {
     private val Context.dataStore  by preferencesDataStore("settings")
-    private val SWITCH_KEY = booleanPreferencesKey("switch_key")
+    private val switchKey = booleanPreferencesKey("switch_key")
 
     val switchFlow: Flow<Boolean> = context.dataStore.data
         .map { preferences ->
-            preferences[SWITCH_KEY] ?: false
+            preferences[switchKey] ?: false
         }
 
     suspend fun saveSwitchState(isOn: Boolean) {
         context.dataStore.edit { preferences ->
-            preferences[SWITCH_KEY] = isOn
+            preferences[switchKey] = isOn
         }
     }
 }

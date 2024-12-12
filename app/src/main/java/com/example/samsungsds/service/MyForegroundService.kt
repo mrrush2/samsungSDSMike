@@ -1,18 +1,13 @@
 package com.example.samsungsds.service
 
-import android.Manifest
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.Service
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.content.pm.ServiceInfo.FOREGROUND_SERVICE_TYPE_LOCATION
 import android.os.IBinder
-import android.util.Log
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.NotificationCompat
-import androidx.core.content.ContextCompat
 import com.example.samsungsds.R
 import com.example.samsungsds.domain.PreferencesRepository
 import dagger.hilt.android.AndroidEntryPoint

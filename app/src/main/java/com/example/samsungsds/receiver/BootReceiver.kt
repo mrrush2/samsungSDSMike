@@ -4,7 +4,6 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.util.Log
-import androidx.lifecycle.asLiveData
 import com.example.samsungsds.domain.PreferencesRepository
 import com.example.samsungsds.service.MyForegroundService
 import dagger.hilt.android.AndroidEntryPoint
@@ -16,7 +15,6 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class BootReceiver : BroadcastReceiver() {
-    private val TAG = "BootReceiver"
 
     @Inject
     lateinit var preferencesRepository: PreferencesRepository
@@ -24,7 +22,7 @@ class BootReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
         if (intent?.action == Intent.ACTION_BOOT_COMPLETED) {
             if (::preferencesRepository.isInitialized) {
-                Log.d(TAG, "onReceive: is init")
+                Log.d(TAG, "onReceive: init")
                 CoroutineScope(Dispatchers.IO).launch {
                     val switchState = preferencesRepository.switchFlow.first()
                     if (switchState) {
@@ -32,7 +30,11 @@ class BootReceiver : BroadcastReceiver() {
                         context?.startForegroundService(serviceIntent)
                     } else Log.d(TAG, "onReceive: else")
                 }
-            } else Log.d(TAG, "onReceive: preferncesRepo not init")
+            } else Log.d(TAG, "onReceive: preferencesRepository not init")
         }
+    }
+
+    companion object {
+        private const val TAG = "BootReceiver"
     }
 }

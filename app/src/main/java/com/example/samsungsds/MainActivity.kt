@@ -72,7 +72,9 @@ class MainActivity : ComponentActivity() {
             val switchState = preferencesRepository.switchFlow.first()
             if (switchState) {
                 val serviceIntent = Intent(this@MainActivity, MyForegroundService::class.java)
-                ContextCompat.startForegroundService(this@MainActivity, serviceIntent) } } }
+                ContextCompat.startForegroundService(this@MainActivity, serviceIntent) }
+        }
+    }
 
     private fun requestPermissions() {
         val permissions = mutableListOf(
@@ -83,7 +85,8 @@ class MainActivity : ComponentActivity() {
         )
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+            if (ContextCompat.checkSelfPermission(this,
+                    Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
                 permissions.add(Manifest.permission.POST_NOTIFICATIONS)
             }
         }
