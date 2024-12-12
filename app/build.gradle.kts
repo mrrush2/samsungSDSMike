@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     kotlin("kapt")
+    alias(libs.plugins.hilt.android)
 }
 
 android {
@@ -29,14 +30,17 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "11"
+        jvmTarget = "17"
     }
     buildFeatures {
         compose = true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.4.0"
     }
 }
 
@@ -53,9 +57,13 @@ dependencies {
 
     //Added dependencies
     implementation(libs.hilt.android)
+    implementation(libs.androidx.runtime.livedata)
     kapt(libs.hilt.android.compiler)
     implementation(libs.room.runtime)
-    kapt(libs.androidx.room.compiler)
+    kapt(libs.room.compiler)
+    implementation(libs.androidx.datastore.preferences)
+    implementation(libs.hilt.navigation.compose)
+    implementation(libs.androidx.activity.ktx)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
@@ -65,3 +73,10 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 }
+
+hilt {
+    enableAggregatingTask = false
+}
+
+// Apply the Hilt plugin
+apply(plugin = "dagger.hilt.android.plugin")
